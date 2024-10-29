@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SupermarkerEF.Data
 {
-    internal class SupermarketContext : DbContext
+    public class SupermarketContext : DbContext
     {
         public SupermarketContext(DbContextOptions options) : base(options) 
         {
