@@ -11,9 +11,11 @@ namespace SupermarkerEF.Data
 {
     public class SupermarketContext : DbContext
     {
-        public SupermarketContext(DbContextOptions options) : base(options) 
+        public SupermarketContext(DbContextOptions options) : base(options)
         {
         }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<PayMode> PayModes { get; set; }
 
         public DbSet<Product> Products { get; set; }
 
