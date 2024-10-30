@@ -1,4 +1,6 @@
-﻿namespace SupermarketWEB.Models
+﻿using Microsoft.Identity.Client;
+
+namespace SupermarketWEB.Models
 {
 	public class Customer
 	{
