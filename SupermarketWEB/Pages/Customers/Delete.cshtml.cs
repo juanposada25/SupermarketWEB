@@ -16,39 +16,39 @@ namespace SupermarketWEB.Pages.Customers
 
         [BindProperty]
 
-        public Category Category { get; set; } = default!;
+        public Customer Customer { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null || _context.Customers == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories.FirstOrDefaultAsync(m=>m.Id == id);
+            var customer = await _context.Customers.FirstOrDefaultAsync(m=>m.Id == id);
 
-            if (category == null)
+            if (customer == null)
             {
                 return NotFound();
             }
             else
             {
-                Category = category;
+                Customer = customer;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if(id == null || _context.Categories == null)
+            if(id == null || _context.Customers == null)
             {
                 return NotFound();
             }
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
+            var customer = await _context.Customers.FindAsync(id);
+            if (customer != null)
             {
-                Category = category;
-                _context.Categories.Remove(Category);
+                Customer = customer;
+                _context.Customers.Remove(Customer);
                 await _context.SaveChangesAsync();
             }
             return RedirectToPage("./Index");
