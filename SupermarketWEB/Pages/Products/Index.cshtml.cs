@@ -5,26 +5,24 @@ using SupermarkerEF.Data;
 using SupermarketWEB.Models;
 
 namespace SupermarketWEB.Pages.Products
-{
-    public class IndexModel : PageModel
     {
-        private readonly SupermarketContext _context;
-
-        public IndexModel(SupermarketContext context)
+        public class IndexModel : PageModel
         {
-            _context = context;
-        }
+            private readonly SupermarketContext _context;
 
-        public IList<Product> Products { get; set; } = default!;
-
-        public async Task OnGetAsync()
-        {
-            if (_context.Products != null)
+            public IndexModel(SupermarketContext context)
             {
-                Products = await _context.Products.ToListAsync();
+                _context = context;
             }
 
-        }
+            public IList<Product> Products { get; set; } = default!;
 
+            public async Task OnGetAsync()
+            {
+                Products = await _context.Products
+                    .Include(p => p.Category) 
+                    .ToListAsync();
+            }
+        }
     }
-}
+

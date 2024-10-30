@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using SupermarkerEF.Data;
 using SupermarketWEB.Models;
 
-namespace SupermarketWEB.Pages.Categories
+namespace SupermarketWEB.Pages.Products
 {
     public class CreateModel : PageModel
     {
@@ -14,26 +14,30 @@ namespace SupermarketWEB.Pages.Categories
             _context = context;
         }
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
-
         [BindProperty]
+        public Product Product { get; set; } = default!;
 
-        public Category Category { get; set; } = default!;
+        public List<Category> Categories { get; set; }
+
+        public void OnGet()
+        {
+            Categories = _context.Categories.ToList(); 
+        }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid || _context.Categories == null || Category == null)
+            if (!ModelState.IsValid || _context.Products == null || Product == null)
             {
+  
+                Categories = _context.Categories.ToList();
                 return Page();
-            } 
+            }
 
-            _context.Categories.Add(Category);
+            _context.Products.Add(Product);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
     }
+
 }
