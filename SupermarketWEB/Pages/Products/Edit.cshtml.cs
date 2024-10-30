@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SupermarkerEF.Data;
 using SupermarketWEB.Models;
+using System.Collections.Generic;
 
-namespace SupermarketWEB.Pages.Categories
+namespace SupermarketWEB.Pages.Products
 {
     public class EditModel : PageModel
     {
@@ -16,22 +17,24 @@ namespace SupermarketWEB.Pages.Categories
         }
 
         [BindProperty]
-
-        public Category Category { get; set; } = default!;
+        public Product Product { get; set; } = default!;
+        public List<Category> Categories { get; set; } = new List<Category>();
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null || _context.Products == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            var product = await _context.Products.FirstOrDefaultAsync(m => m.Id == id);
+            if (product == null)
             {
                 return NotFound();
             }
-            Category = category;
+            Categories = await _context.Categories.ToListAsync();
+
+            Product = product;
             return Page();
         }
 
@@ -39,10 +42,11 @@ namespace SupermarketWEB.Pages.Categories
         {
             if (!ModelState.IsValid)
             {
+                Categories = await _context.Categories.ToListAsync();
                 return Page();
             }
 
-            _context.Attach(Category).State = EntityState.Modified;
+            _context.Attach(Product).State = EntityState.Modified;
 
             try
             {
@@ -50,7 +54,7 @@ namespace SupermarketWEB.Pages.Categories
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoryExists(Category.Id))
+                if (!ProductExists(Product.Id))
                 {
                     return NotFound();
                 }
@@ -63,10 +67,9 @@ namespace SupermarketWEB.Pages.Categories
             return RedirectToPage("./Index");
         }
 
-        private bool CategoryExists(int id)
+        private bool ProductExists(int id)
         {
-            return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
         }
-
     }
 }
