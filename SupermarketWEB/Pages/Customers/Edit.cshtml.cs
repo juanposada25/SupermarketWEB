@@ -17,21 +17,21 @@ namespace SupermarketWEB.Pages.Customers
 
         [BindProperty]
 
-        public Category Category { get; set; } = default!;
+        public Customer Customer { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null || _context.Customers == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            var customer = await _context.Customers.FirstOrDefaultAsync(m => m.Id == id);
+            if (customer == null)
             {
                 return NotFound();
             }
-            Category = category;
+            Customer = customer;
             return Page();
         }
 
@@ -42,7 +42,7 @@ namespace SupermarketWEB.Pages.Customers
                 return Page();
             }
 
-            _context.Attach(Category).State = EntityState.Modified;
+            _context.Attach(Customer).State = EntityState.Modified;
 
             try
             {
@@ -50,7 +50,7 @@ namespace SupermarketWEB.Pages.Customers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoryExists(Category.Id))
+                if (!CustomerExists(Customer.Id))
                 {
                     return NotFound();
                 }
@@ -63,9 +63,9 @@ namespace SupermarketWEB.Pages.Customers
             return RedirectToPage("./Index");
         }
 
-        private bool CategoryExists(int id)
+        private bool CustomerExists(int id)
         {
-            return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Customers?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
     }
