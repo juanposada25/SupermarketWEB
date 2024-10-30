@@ -21,16 +21,16 @@ namespace SupermarketWEB.Pages.Customers
 
         [BindProperty]
 
-        public Category Category { get; set; } = default!;
+        public Customer Customer { get; set; } = default!;
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid || _context.Categories == null || Category == null)
+            if (!ModelState.IsValid || _context.Customers == null || Customer == null)
             {
                 return Page();
             } 
 
-            _context.Categories.Add(Category);
+            _context.Customers.Add(Customer);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
