@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SupermarkerEF.Data;
 using SupermarketWEB.Models;
 
-namespace SupermarketWEB.Pages.Categories
+namespace SupermarketWEB.Pages.PayModes
 {
     public class DeleteModel : PageModel
     {
@@ -16,39 +16,39 @@ namespace SupermarketWEB.Pages.Categories
 
         [BindProperty]
 
-        public Category Category { get; set; } = default!;
+        public PayMode PayMode { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null || _context.PayModes == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories.FirstOrDefaultAsync(m=>m.Id == id);
+            var payMode = await _context.PayModes.FirstOrDefaultAsync(m=>m.Id == id);
 
-            if (category == null)
+            if (payMode == null)
             {
                 return NotFound();
             }
             else
             {
-                Category = category;
+                PayMode = payMode;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if(id == null || _context.Categories == null)
+            if(id == null || _context.PayModes == null)
             {
                 return NotFound();
             }
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
+            var payMode = await _context.PayModes.FindAsync(id);
+            if (payMode != null)
             {
-                Category = category;
-                _context.Categories.Remove(Category);
+                PayMode = payMode;
+                _context.PayModes.Remove(PayMode);
                 await _context.SaveChangesAsync();
             }
             return RedirectToPage("./Index");
