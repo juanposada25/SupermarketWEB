@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SupermarketWEB.Model;
 
 namespace SupermarkerEF.Data
 {
@@ -14,6 +15,8 @@ namespace SupermarkerEF.Data
         public SupermarketContext(DbContextOptions options) : base(options)
         {
         }
+
+        public DbSet<User> Users { get; set; }
 
         public DbSet<Customer> Customers { get; set; }
 
