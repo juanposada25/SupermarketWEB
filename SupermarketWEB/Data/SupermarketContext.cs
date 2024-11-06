@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SupermarketWEB.Model;
 
-namespace SupermarkerEF.Data
+namespace SupermarketWEB.Data
 {
     public class SupermarketContext : DbContext
     {
